@@ -1,0 +1,25 @@
+specVersion: "2.6"
+type: application
+metadata:
+  name: 'zfioriapp_ec'
+builder:
+  customTasks:
+  - name: deploy-to-abap
+    afterTask: replaceVersion
+    configuration:
+      target:
+        url: https://sapfioriexed.exedconsulting.com:44300/
+        client: '900'
+        auth: basic
+        params:
+          sap-language: pt
+      credentials:
+        username: env:UI5_USERNAME
+        password: env:UI5_PASSWORD
+      app:
+        name: zfioriapp_ec
+        package: ZP_CURSOFIORI_EC
+        transport: S4HK903053
+      exclude:
+      - .*\.test.js
+      - internal.md
