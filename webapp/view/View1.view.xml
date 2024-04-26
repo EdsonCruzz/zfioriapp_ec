@@ -10,19 +10,20 @@
     xmlns:u="sap.ui.unified"
     xmlns="sap.m">
     <Page id="page" title="{i18n>title}">
-        <smartFilterBar:SmartFilterBar id="SF_CURSO" persistencyKey="UniqueAndStablePersistencyKey" entitySet="CursosSet" >
+        <content>
+            <smartFilterBar:SmartFilterBar id="SF_CURSO" persistencyKey="UniqueAndStablePersistencyKey" entitySet="CursosSet" >
 
-            <smartFilterBar:controlConfiguration>
-                <smartFilterBar:ControlConfiguration id="_IDGenControlConfiguration1" key="Idcurso" index="0" label="{i18n>lblIdcurso}" groupId="_BASIC" width="auto" visibleInAdvancedArea="true"/>
-                <smartFilterBar:ControlConfiguration id="_IDGenControlConfiguration2" key="Nomecurso" index="1" label="{i18n>lblNomecurso}" groupId="_BASIC" width="auto" visibleInAdvancedArea="true" />
-            </smartFilterBar:controlConfiguration>
+                <smartFilterBar:controlConfiguration>
+                    <smartFilterBar:ControlConfiguration id="_IDGenControlConfiguration1" key="Idcurso" index="0" label="{i18n>lblIdcurso}" groupId="_BASIC" width="auto" visibleInAdvancedArea="true"/>
+                    <smartFilterBar:ControlConfiguration id="_IDGenControlConfiguration2" key="Nomecurso" index="1" label="{i18n>lblNomecurso}" groupId="_BASIC" width="auto" visibleInAdvancedArea="true" />
+                </smartFilterBar:controlConfiguration>
 
-        </smartFilterBar:SmartFilterBar>
+            </smartFilterBar:SmartFilterBar>
 
-        <smartTable:SmartTable entitySet="CursosSet" smartFilterId="SF_CURSO" useExportToExcel="true" useVariantManagement="true" useTablePersonalisation="true" header="Cursos" showRowCount="true" showFullScreenButton="true" enableAutoBinding="true" requestAtLeastFields="Idcurso,Nomecurso,Duracao" initiallyVisibleFields="Idcurso,Nomecurso,Duracao" beforeRebindTable="onBeforeRebindTable" tableType="Table" id="SmartTable">
+            <smartTable:SmartTable entitySet="CursosSet" smartFilterId="SF_CURSO" useExportToExcel="true" useVariantManagement="true" useTablePersonalisation="true" header="Cursos" showRowCount="true" showFullScreenButton="true" enableAutoBinding="true" requestAtLeastFields="Idcurso,Nomecurso,Duracao" initiallyVisibleFields="Idcurso,Nomecurso,Duracao" beforeRebindTable="onBeforeRebindTable" tableType="Table" id="SmartTable">
                 <smartTable:customToolbar>
                     <OverflowToolbar id="_IDGenOverflowToolbar1" design="Transparent">
-                        <u:FileUploader id="_IDGenFileUploader1" name="myFileUpload" change="onChangeArquivo" buttonText="Upload" fileType="csv" buttonOnly="true"/>
+                    <!-- <u:FileUploader id="_IDGenFileUploader1" name="myFileUpload" change="onChangeArquivo" buttonText="Upload" fileType="csv" buttonOnly="true"/> -->
                         <ToolbarSpacer id="_IDGenToolbarSpacer1" />
                         <OverflowToolbarButton id="btEdit" icon="sap-icon://edit" press="onEdit" />
                         <OverflowToolbarButton id="btAdd" icon="sap-icon://add" press="onAdiciona" />
@@ -34,7 +35,14 @@
                 </Table>
                 <smartTable:layoutData>
                     <FlexItemData id="_IDGenFlexItemData1" growFactor="1" baseSize="0%" />
-                </smartTable:layoutData>
-            </smartTable:SmartTable>
+                    </smartTable:layoutData>
+                </smartTable:SmartTable>
+        </content>
+            <footer>
+            <Toolbar id="idOverTollbar">
+                <Button press="handleMessagePopoverPress" text="Mensagens {Auxiliar>/Menssagens/length}" icon="sap-icon://message-popup" id="messagePopoverBtn" tooltip="Mensagens" visible="true" iconFirst="true" />
+                <ToolbarSpacer id="idToolbarSpacerD" />
+            </Toolbar>
+        </footer>
     </Page>
 </mvc:View>

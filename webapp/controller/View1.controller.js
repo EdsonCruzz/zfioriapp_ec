@@ -1,15 +1,64 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller"
+    "sap/ui/core/mvc/Controller",
+    "sap/ui/model/json/JSONModel",
+    "sap/m/library",
+    "sap/m/MessagePopover",
+    'sap/ui/table/Column',
+    'sap/ui/model/FilterOperator',
+    "sap/ui/model/Filter",
+    "sap/m/MessageItem"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller) {
+    function (Controller, JSONModel, MLibrary, MessagePopover, UIColumn, FilterOperator, Filter, MessageItem) {
         "use strict";
+
+        var oMessagePopover;
 
         return Controller.extend("zfioriappec.controller.View1", {
             onInit: function () {
+                this.criaModeloAuxiliar()
+            },
 
+            criaModeloAuxiliar: function () {
+                let oModel = new JSONModel()
+                let objeto = {
+                    Menssagens: [],
+                    Editable: false
+                }
+
+                oModel.setData(objeto)
+                this.getView().setModel(oModel, "Auxiliar")
+
+                this.AlimentaModeloMenssagens()
+            },
+
+            AlimentaModeloMenssagens: function () {
+                let oMessageTemplate = new MessageItem({
+                    type: '{Auxiliar>type}',
+                    title: '{Auxiliar>title}',
+                    activeTitle: "{Auxiliar>active}",
+                    description: '{Auxiliar>description}',
+                    subtitle: '{Auxiliar>subtitle}',
+                    counter: '{Auxiliar>counter}'
+                });
+
+                oMessagePopover = new MessagePopover({
+                    items: {
+                        path: 'Auxiliar>/Menssagens',
+                        template: oMessageTemplate
+                    },
+                    activeTitlePress: function () {
+
+                    }
+                });
+
+                var messagePopoverBtn = this.byId("messagePopoverBtn");
+
+                if (messagePopoverBtn) {
+                    this.byId("messagePopoverBtn").addDependent(oMessagePopover);
+                }
             },
 
             onDeleta: function () {
@@ -40,7 +89,7 @@ sap.ui.define([
                                             that.byId("messagePopoverBtn").setType("Accept");
                                             oMessagePopover.openBy(that.getView().byId("messagePopoverBtn"));
                                         },
-                                        error: function () {
+                                        error: function (oError) {
                                             let arrayMsg = {
                                                 type: "Error",
                                                 title: "Erro ao excluir o curso",
@@ -99,11 +148,13 @@ sap.ui.define([
                                     if (sAction == "Sim") {
                                         let objeto = {
                                             Idcurso: Idcurso,
-                                            Nomecurso: Nomecurso,
-                                            Duracao: Duracao
+                                            Alunoid: Idcurso,
+                                            NomeAluno: Duracao,
+                                            // Nomecurso: Nomecurso,
+                                            // Duracao: Duracao
                                         }
-                                        oModel.create('/CursosSet', objeto, {
-                                            success: function (oData, oReponse) {
+                                        oModel.create('/AlunosSet', objeto, {
+                                            success: function (oData, oResponse) {
                                                 let arrayMsg = {
                                                     type: "Success",
                                                     title: "Curso incluido com sucesso !!!",
