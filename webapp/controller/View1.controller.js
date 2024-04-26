@@ -147,13 +147,11 @@ sap.ui.define([
                                 onClose: function (sAction) {
                                     if (sAction == "Sim") {
                                         let objeto = {
-                                            Idcurso: Idcurso,
-                                            Alunoid: Idcurso,
-                                            NomeAluno: Duracao,
-                                            // Nomecurso: Nomecurso,
-                                            // Duracao: Duracao
+                                            Idcurso: parseInt(Idcurso),
+                                            Nomecurso: Nomecurso,
+                                            Duracao: Duracao
                                         }
-                                        oModel.create('/AlunosSet', objeto, {
+                                        oModel.create('/CursosSet', objeto, {
                                             success: function (oData, oResponse) {
                                                 let arrayMsg = {
                                                     type: "Success",
