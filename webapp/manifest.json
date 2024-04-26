@@ -24,6 +24,26 @@
           "localUri": "localService/metadata.xml",
           "odataVersion": "2.0"
         }
+      },
+      "annotation0": {
+        "type": "ODataAnnotation",
+        "uri": "localService/annotation0.xml",
+        "settings": {
+            "localUri": "localService/annotation0.xml"
+        }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "zfioriapp_ec-display": {
+          "semanticObject": "zfioriapp_ec",
+          "action": "display",
+          "title": "{{flpTitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
       }
     }
   },

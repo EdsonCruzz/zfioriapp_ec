@@ -1,0 +1,30 @@
+<Annotations Target="ZG_CURSOFIORI_EC_SRV.Cursos/Idcurso">
+    <Annotations Target="ZG_CURSOFIORI_EC_SRV.Cursos/Idcurso"
+        xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="com.sap.vocabularies.Common.v1.ValueList">
+            <Record Type="com.sap.vocabularies.Common.v1.ValueListType">
+
+                <PropertyValue Property="CollectionPath" String="ZshCursosEcSet"/>
+                <PropertyValue Property="SearchSupported" Bool="true"/>
+                <PropertyValue Property="Parameters">
+                    <Collection>
+                        <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterInOut">
+                            <PropertyValue Property="LocalDataProperty" PropertyPath="Idcurso"/>
+                            <PropertyValue Property="ValueListProperty" String="Idcurso"/>
+                        </Record>
+                        <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                            <PropertyValue Property="ValueListProperty" String="Nomecurso"/>
+                        </Record>
+                    </Collection>
+                </PropertyValue>
+
+            </Record>
+        </Annotation>
+    </Annotations>
+    <Annotations Target="ZG_CURSOFIORI_EC_SRV.Cursos"
+        xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="com.sap.vocabularies.Common.v1.ApplyMultiUnitBehaviorForSortingAndFiltering" Bool="true"/>
+    </Annotations>
+</Annotations>
+
+
