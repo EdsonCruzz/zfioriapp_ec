@@ -1,17 +1,23 @@
 sap.ui.define([
     "zfioriappec/controller/App.controller",
     "sap/ui/model/json/JSONModel",
-    "sap/m/MessageBox"
+    "sap/m/MessageBox",
+    'sap/ui/model/FilterOperator',
+    "sap/ui/model/Filter",    
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, JSONModel, MessageBox) {
+    function (Controller, JSONModel, MessageBox, FilterOperator, Filter) {
         "use strict";
 
         return Controller.extend("zfioriappec.controller.Alunos", {
             onInit: function () {
                 this.getRouter().getRoute("RouteAlunos").attachPatternMatched(this._onObjectMatched, this);
+
+                var oSmartTable = this.getView().byId("SmartTable");
+            
+                oSmartTable.attachBeforeRebindTable(this.onBeforeRebindTable, this);
             },
 
             _onObjectMatched: function (oEvent) {
@@ -34,7 +40,7 @@ sap.ui.define([
                     this._bindView("/" + sObjectPath);
                 }.bind(this));
 
-                this._bindSmartTable(Idcurso);
+                this._Idcurso = Idcurso;
 
             },
 
@@ -58,14 +64,49 @@ sap.ui.define([
                 });
             },
 
-            _bindSmartTable: function(Idcurso) {
-                var oSmartTable = this.getView().byId("SmartTable");
-                var oTable = oSmartTable.getTable();
-                var oBinding = oTable.getBinding("items");
+            onBeforeRebindTable: function(oEvent) {
+                var oBindingParams = oEvent.getParameter("bindingParams");
+                var oViewModel = this.getView().getModel();
+
+                // Crie uma instância do filtro para sua busca
+                var oFilter = new sap.ui.model.Filter("Idcurso", sap.ui.model.FilterOperator.EQ, this._Idcurso);
+            
+                // Execute a busca usando o método Query
+                oViewModel.read("/AlunosSet", {
+                    filters: [oFilter],
+                    success: function(oData) {
+                        // No sucesso da busca, atualize o objeto de filtros no evento
+                        oBindingParams.filters = [oFilter];
+                    },
+                    error: function(oError) {
+                        // Em caso de erro, exiba uma mensagem de erro ou tome alguma outra ação apropriada
+                        console.error("Erro ao executar a busca:", oError);
+                    }
+                });
+
+                // var Idcurso = this._Idcurso;
+                // var oViewModel = this.getView().getModel();
+                // var oSmartTable = this.getView().byId("SmartTable");
+                // // var oTable = oSmartTable.getTable();
+                // // var oBinding = oTable.getBinding("items");
               
-                var oFilter = new sap.ui.model.Filter("Idcurso", sap.ui.model.FilterOperator.EQ, Idcurso);
+                // var oFilter = new sap.ui.model.Filter("Idcurso", sap.ui.model.FilterOperator.EQ, Idcurso);
               
-                oBinding.filter([oFilter]);
+                // // oBinding.filter([oFilter]);
+
+                // oViewModel.read("/AlunosSet", {
+                //     filters: [oFilter],
+                //     success: function(oData) {
+                //         var oTable = oSmartTable.getTable();
+                //         var oBinding = oTable.getBinding("items");
+                //         oBinding.setModel(oViewModel);
+                //         oBinding.bindRows("/AlunosSet");
+                //     },
+                //     error: function(oError) {
+                //         // Em caso de erro, exiba uma mensagem de erro ou tome alguma outra ação apropriada
+                //         console.error("Erro ao executar a busca:", oError);
+                //     }
+                // });
             },
 
             _onBindingChange: function () {
