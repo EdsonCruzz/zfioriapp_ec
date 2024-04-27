@@ -92,7 +92,9 @@
       "": {
         "dataSource": "mainService",
         "preload": true,
-        "settings": {}
+        "settings": {
+          "useBatch": false
+        }
       }
     },
     "resources": {
@@ -119,6 +121,13 @@
           "target": [
             "TargetView1"
           ]
+        },
+        {
+          "name" : "RouteAlunos",
+          "pattern": "Alunos/{Idcurso}",
+          "target": [
+            "TargetAlunos"
+          ]
         }
       ],
       "targets": {
@@ -128,6 +137,13 @@
           "clearControlAggregation": false,
           "viewId": "View1",
           "viewName": "View1"
+        },
+        "TargetAlunos": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Alunos",
+          "viewName": "Alunos"
         }
       }
     },

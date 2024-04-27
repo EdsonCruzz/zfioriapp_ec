@@ -1,5 +1,5 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
+    "zfioriappec/controller/App.controller",
     "sap/ui/model/json/JSONModel",
     "sap/m/library",
     "sap/m/MessagePopover",
@@ -185,7 +185,9 @@ sap.ui.define([
                             })
                         } else {
                             sap.m.MessageBox.error(that.getView().getModel("i18n").getResourceBundle().getText("msgErroCursoExist"));
+
                         }
+
                     },
                     error: function (oError) {
                         sap.m.MessageBox.error(that.getView().getModel("i18n").getResourceBundle().getText("lblMsgCreateError"));
@@ -196,7 +198,25 @@ sap.ui.define([
 
             handleMessagePopoverPress: function () {
                 oMessagePopover.openBy(this.getView().byId("messagePopoverBtn"));
-            }
+            },
+
+            onEdit: function () {
+                let Table = this.getView().byId("idTable");
+                let selecionados = Table.getSelectedItems();
+                if (selecionados.length > 0) {
+                    if (selecionados.length > 1) {
+                        sap.m.MessageBox.error("Só poderá ser visualizado um curso por vez !!!")
+                    } else {
+                        let Idcurso = parseInt(selecionados[0].mAggregations.cells[0].getProperty("text"))
+
+                        this.getRouter().navTo("RouteAlunos", {
+                            Idcurso
+                        });
+                    }
+                }
+
+            },
+
 
         });
     });

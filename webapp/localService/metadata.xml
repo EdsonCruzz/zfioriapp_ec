@@ -53,7 +53,7 @@
                 <Property Name="Idcurso" Type="Edm.Int32" Nullable="false" sap:unicode="false" sap:label="ID Curso"/>
                 <Property Name="Alunoid" Type="Edm.Int32" Nullable="false" sap:unicode="false" sap:label="ID Aluno"/>
                 <Property Name="Nomealuno" Type="Edm.String" MaxLength="50" sap:unicode="false" sap:label="Nome Aluno"/>
-                <Property Name="Ativo" Type="Edm.String" MaxLength="1" sap:unicode="false" sap:label="Ativo"/>
+                <Property Name="Ativo" Type="Edm.Boolean" MaxLength="1" sap:unicode="false" sap:label="Ativo"/>
             </EntityType>
             <EntityType Name="ZshAlunosEc" sap:content-version="1">
                 <Key>
