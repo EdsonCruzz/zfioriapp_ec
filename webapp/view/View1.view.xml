@@ -25,7 +25,7 @@
                     <OverflowToolbar id="_IDGenOverflowToolbar1" design="Transparent">
                     <!-- <u:FileUploader id="_IDGenFileUploader1" name="myFileUpload" change="onChangeArquivo" buttonText="Upload" fileType="csv" buttonOnly="true"/> -->
                         <ToolbarSpacer id="_IDGenToolbarSpacer1" />
-                        <OverflowToolbarButton id="btEdit" icon="sap-icon://edit" press="onEdit" />
+                        <OverflowToolbarButton id="btEdit" icon="sap-icon://display" press="onEdit" />
                         <OverflowToolbarButton id="btAdd" icon="sap-icon://add" press="onAdiciona" />
                         <OverflowToolbarButton id="btDelete" icon="sap-icon://delete" press="onDeleta" />
                     </OverflowToolbar>

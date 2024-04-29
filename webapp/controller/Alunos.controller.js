@@ -22,10 +22,6 @@ sap.ui.define([
                 this.criaModeloAuxiliar()
 
                 this.getRouter().getRoute("RouteAlunos").attachPatternMatched(this._onObjectMatched, this);
-
-                var oSmartTable = this.getView().byId("SmartTable");
-            
-                oSmartTable.attachBeforeRebindTable(this.onBeforeRebindTable, this);
             },
 
             criaModeloAuxiliar: function () {
@@ -90,6 +86,9 @@ sap.ui.define([
 
                 this._Idcurso = Idcurso;
 
+                let oTable = this.getView().byId("SmartTable");
+                oTable.rebindTable();
+
             },
 
             _bindView: function (sObjectPath) {
@@ -112,45 +111,11 @@ sap.ui.define([
                 });
             },
 
-            onBeforeRebindTable: function(oEvent) {
-                var oBindingParams = oEvent.getParameter("bindingParams");
-                var oViewModel = this.getView().getModel();
-
-                var oFilter = new sap.ui.model.Filter("Idcurso", sap.ui.model.FilterOperator.EQ, this._Idcurso);
-            
-                oViewModel.read("/AlunosSet", {
-                    filters: [oFilter],
-                    success: function(oData) {
-                        oBindingParams.filters = [oFilter];
-                    },
-                    error: function(oError) {
-                        console.error("Erro ao executar a busca:", oError);
-                    }
-                });
-
-                // var Idcurso = this._Idcurso;
-                // var oViewModel = this.getView().getModel();
-                // var oSmartTable = this.getView().byId("SmartTable");
-                // // var oTable = oSmartTable.getTable();
-                // // var oBinding = oTable.getBinding("items");
-              
-                // var oFilter = new sap.ui.model.Filter("Idcurso", sap.ui.model.FilterOperator.EQ, Idcurso);
-              
-                // // oBinding.filter([oFilter]);
-
-                // oViewModel.read("/AlunosSet", {
-                //     filters: [oFilter],
-                //     success: function(oData) {
-                //         var oTable = oSmartTable.getTable();
-                //         var oBinding = oTable.getBinding("items");
-                //         oBinding.setModel(oViewModel);
-                //         oBinding.bindRows("/AlunosSet");
-                //     },
-                //     error: function(oError) {
-                //         // Em caso de erro, exiba uma mensagem de erro ou tome alguma outra ação apropriada
-                //         console.error("Erro ao executar a busca:", oError);
-                //     }
-                // });
+            onBeforeRebindTable: function(oEvent){
+                var oBinding = oEvent.getParameter("bindingParams");
+                var Idcurso = parseInt(this._Idcurso);
+                var oFilter = new sap.ui.model.Filter("Idcurso", sap.ui.model.FilterOperator.EQ, Idcurso);
+                oBinding.filters.push(oFilter);
             },
 
             _onBindingChange: function () {
@@ -163,72 +128,6 @@ sap.ui.define([
                 }
 
             },
-
-            // onEdita: function () {
-            //     let oModel = this.getView().getModel("AuxiliarAluno")
-            //     let oData = oModel.getData()
-
-            //     oData.editable = true
-            //     oData.visibleEdit = false,
-            //         oData.visibleSave = true
-            //     oModel.refresh()
-            // },
-
-            // onCancela: function () {
-            //     let oModel = this.getView().getModel()
-            //     oModel.refresh()
-
-            //     let that = this
-            //     sap.m.MessageBox.alert("Confirma o cancelamento da edição?", {
-            //         actions: ["Sim", "Não"],
-            //         onClose: function (sAction) {
-            //             let oModelAuxiliar = that.getView().getModel("AuxiliarAluno")
-            //             let oData = oModelAuxiliar.getData()
-
-            //             oData.editable = false
-            //             oData.visibleEdit = true
-            //             oData.visibleSave = false
-            //             oModelAuxiliar.refresh()
-            //         }
-            //     })
-
-            // },
-
-            // onSalva: function () {
-            //     let idNome = this.getView().byId("idNome").getValue()
-            //     let Email = this.getView().byId("Email").getValue()
-            //     let ProjetoSegw = this.getView().byId("ProjetoSegw").getValue()
-            //     let idCep = this.getView().byId("idCep").getValue()
-            //     let idEndereco = this.getView().byId("idEndereco").getValue()
-            //     let idBairro = this.getView().byId("idBairro").getValue()
-            //     let that = this
-            //     let chave = this.getView().byId("Usuario").getValue()
-
-            //     let objeto = {
-            //         Nome: idNome,
-            //         ProjetoSegw: ProjetoSegw,
-            //         Email: Email,
-            //         Cep: idCep,
-            //         Endereco: idEndereco,
-            //         Bairro: idBairro
-            //     }
-
-            //     this.getView().getModel().update("/AlunosSet('" + chave + "')", objeto, {
-            //         success: function (oData, oReponse) {
-            //             sap.m.MessageBox.success("Usuario atualizado com sucesso!!!", {
-            //                 actions: ["Ok"],
-            //                 onClose: function (sAction) {
-            //                     that.onCancela()
-            //                     that.getRouter().navTo("RouteView1")
-            //                 }
-            //             })
-
-            //         },
-            //         error: function (oError) {
-            //             sap.m.MessageBox.error("Erro ao atualizar o aluno !!!");
-            //         }
-            //     });
-            // },
 
             onAdiciona: function () {
                 if (!this.adicionar) {
@@ -252,15 +151,16 @@ sap.ui.define([
                 let Nomealuno = this.adicionar.mAggregations.content[1].getValue()
                 let Ativo = this.adicionar.mAggregations.content[3].getSelected()
 
-                // var oDados = {
-                //     "Alunoid": Alunoid
-                // }
+                var oDados = {
+                    "Idcurso": this._Idcurso,
+                    "Alunoid": Alunoid                    
+                }
 
-                // this.getView().getModel().callFunction('/GetCursoExist', {                    
-                //     method: "GET",
-                //     urlParameters: oDados,
-                //     success: function (oData, oReponse) {
-                //         if (oData.OK === '') {
+                this.getView().getModel().callFunction('/GetAlunoExist', {                    
+                    method: "GET",
+                    urlParameters: oDados,
+                    success: function (oData, oReponse) {
+                        if (oData.OK === '') {
                             sap.m.MessageBox.alert("Confirma a inclusão?", {
                                 actions: ["Sim", "Não"],
                                 onClose: function (sAction) {
@@ -303,16 +203,16 @@ sap.ui.define([
                                     }
                                 }
                             })
-                //         } else {
-                //             sap.m.MessageBox.error(that.getView().getModel("i18n").getResourceBundle().getText("msgErroCursoExist"));
+                        } else {
+                            sap.m.MessageBox.error(that.getView().getModel("i18n").getResourceBundle().getText("msgErroCursoExist"));
 
-                //         }
+                        }
 
-                //     },
-                //     error: function (oError) {
-                //         sap.m.MessageBox.error(that.getView().getModel("i18n").getResourceBundle().getText("lblMsgCreateError"));
-                //     }
-                // });
+                    },
+                    error: function (oError) {
+                        sap.m.MessageBox.error(that.getView().getModel("i18n").getResourceBundle().getText("lblMsgCreateError"));
+                    }
+                });
 
             },
 
