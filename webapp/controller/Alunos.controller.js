@@ -87,15 +87,7 @@ sap.ui.define([
                 this._Idcurso = Idcurso;
 
                 let oTable = this.getView().byId("SmartTable");
-                // oTable.rebindTable();
-
-                if (oTable.isInitialised()) {
-                    oTable.rebindSmartTable();
-                } else {
-                    oTable.attachEventOnce("afterInit", function() {
-                        oTable.rebindSmartTable();
-                    }, this);
-                }
+                oTable.rebindTable();
 
             },
 
