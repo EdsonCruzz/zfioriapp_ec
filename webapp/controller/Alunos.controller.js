@@ -248,10 +248,6 @@ sap.ui.define([
                                     Indice = selecionados[i]
                                     oModel.remove(Indice, {
                                         success: function () {
-                                            if (!oModelAuxiliar.oData.Mensagens) {
-                                                oModelAuxiliar.oData.Mensagens = [];
-                                            }
-
                                             let arrayMsg = {
                                                 type: "Success",
                                                 title: "Aluno excluido com sucesso",
