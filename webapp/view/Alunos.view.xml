@@ -39,7 +39,7 @@
         </content>
             <footer>
             <Toolbar id="idOverTollbar">
-                <Button press="handleMessagePopoverPress" text="Mensagens {Auxiliar>/Menssagens/length}" icon="sap-icon://message-popup" id="messagePopoverBtn" tooltip="Mensagens" visible="true" iconFirst="true" />
+                <Button press="handleMessagePopoverPress" text="Mensagens {AuxiliarAluno>/Mensagens/length}" icon="sap-icon://message-popup" id="messagePopoverBtn" tooltip="Mensagens" visible="true" iconFirst="true" />
                 <ToolbarSpacer id="idToolbarSpacerD" />
             </Toolbar>
         </footer>

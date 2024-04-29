@@ -68,7 +68,7 @@ sap.ui.define([
                 let Table = this.getView().byId("idTable")
                 let selecionados = Table.getSelectedContextPaths()
                 if (selecionados.length > 0) {
-                    sap.m.MessageBox.alert("Confirma a exclusão dos cursos selecionados?"  , {
+                    sap.m.MessageBox.alert("Ao exluir o curso, todos os alunos desse curso serão exluidos. Deseja continuar com a exclusão?"  , {
                         actions: ["Sim", "Não"],
                         onClose: function (sAction) {
                             if (sAction == "Sim") {

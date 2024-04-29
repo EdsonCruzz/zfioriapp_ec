@@ -173,6 +173,10 @@ sap.ui.define([
                                         }
                                         oModel.create('/AlunosSet', objeto, {
                                             success: function (oData, oResponse) {
+                                                if (!oModelAuxiliar.oData.Mensagens) {
+                                                    oModelAuxiliar.oData.Mensagens = [];
+                                                }
+                                                
                                                 let arrayMsg = {
                                                     type: "Success",
                                                     title: "Aluno incluido com sucesso !!!",
@@ -204,7 +208,7 @@ sap.ui.define([
                                 }
                             })
                         } else {
-                            sap.m.MessageBox.error(that.getView().getModel("i18n").getResourceBundle().getText("msgErroCursoExist"));
+                            sap.m.MessageBox.error(that.getView().getModel("i18n").getResourceBundle().getText("msgErroAlunoExist"));
 
                         }
 
@@ -236,13 +240,17 @@ sap.ui.define([
                                     Indice = selecionados[i]
                                     oModel.remove(Indice, {
                                         success: function () {
+                                            if (!oModelAuxiliar.oData.Mensagens) {
+                                                oModelAuxiliar.oData.Mensagens = [];
+                                            }
+
                                             let arrayMsg = {
                                                 type: "Success",
                                                 title: "Aluno excluido com sucesso",
                                                 activeTitle: true,
                                                 description: "O aluno com indice " + Indice + " foi excluido com sucesso!!!",
                                             }
-                                            oModelAuxiliar.oData.Menssagens.push(arrayMsg);
+                                            oModelAuxiliar.oData.Mensagens.push(arrayMsg);
                                             oModelAuxiliar.refresh(true);
 
                                             that.byId("messagePopoverBtn").setType("Accept");
@@ -255,7 +263,7 @@ sap.ui.define([
                                                 activeTitle: true,
                                                 description: "Erro ao excluir o aluno com indice " + Indice + " !!!",
                                             }
-                                            oModelAuxiliar.oData.Menssagens.push(arrayMsg);
+                                            oModelAuxiliar.oData.Mensagens.push(arrayMsg);
                                             oModelAuxiliar.refresh(true);
 
                                             that.byId("messagePopoverBtn").setType("Accept");
