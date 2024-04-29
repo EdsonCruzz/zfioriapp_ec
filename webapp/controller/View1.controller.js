@@ -81,7 +81,7 @@ sap.ui.define([
                                                 type: "Success",
                                                 title: "Curso excluido com sucesso",
                                                 activeTitle: true,
-                                                description: "O curso com indice " + Indice + " foi excluido com sucesso!!!",
+                                                description: "O curso " + Indice.Idcurso + " foi excluido com sucesso!!!",
                                             }
                                             oModelAuxiliar.oData.Menssagens.push(arrayMsg);
                                             oModelAuxiliar.refresh(true);
@@ -94,7 +94,7 @@ sap.ui.define([
                                                 type: "Error",
                                                 title: "Erro ao excluir o curso",
                                                 activeTitle: true,
-                                                description: "Erro ao excluir o curso com indice " + Indice + " !!!",
+                                                description: "Erro ao excluir o curso " + Indice.Nomecurso + " !!!",
                                             }
                                             oModelAuxiliar.oData.Menssagens.push(arrayMsg);
                                             oModelAuxiliar.refresh(true);
