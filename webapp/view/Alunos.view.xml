@@ -22,6 +22,7 @@
             <smartTable:SmartTable entitySet="AlunosSet" smartFilterId="SF_CURSO" useExportToExcel="true" useVariantManagement="true" useTablePersonalisation="true" header="Lista de alunos" showRowCount="true" showFullScreenButton="true" enableAutoBinding="true" requestAtLeastFields="Alunoid,Nomealuno,Ativo" initiallyVisibleFields="Alunoid,Nomealuno,Ativo" beforeRebindTable="onBeforeRebindTable" tableType="Table" id="SmartTable">
                 <smartTable:customToolbar>
                     <OverflowToolbar id="_IDGenOverflowToolbar1" design="Transparent">
+                        <u:FileUploader id="_IDGenFileUploader1" name="myFileUpload" change="onChangeArquivo" buttonText="Upload" fileType="csv" buttonOnly="true"/>
                         <ToolbarSpacer id="_IDGenToolbarSpacer1" />
                         <!-- <OverflowToolbarButton id="btEdit" icon="sap-icon://edit" press="onEdit" /> -->
                         <OverflowToolbarButton id="btAdd" icon="sap-icon://add" press="onAdiciona" />

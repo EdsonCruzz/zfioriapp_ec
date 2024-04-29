@@ -20,7 +20,7 @@
 
             </smartFilterBar:SmartFilterBar>
 
-            <smartTable:SmartTable entitySet="CursosSet" smartFilterId="SF_CURSO" useExportToExcel="true" useVariantManagement="true" useTablePersonalisation="true" header="Cursos" showRowCount="true" showFullScreenButton="true" enableAutoBinding="true" requestAtLeastFields="Idcurso,Nomecurso,Duracao" initiallyVisibleFields="Idcurso,Nomecurso,Duracao" beforeRebindTable="onBeforeRebindTable" tableType="Table" id="SmartTable">
+            <smartTable:SmartTable entitySet="CursosSet" smartFilterId="SF_CURSO" useExportToExcel="true" useVariantManagement="true" useTablePersonalisation="true" header="Lista de cursos" showRowCount="true" showFullScreenButton="true" enableAutoBinding="true" requestAtLeastFields="Idcurso,Nomecurso,Duracao" initiallyVisibleFields="Idcurso,Nomecurso,Duracao" beforeRebindTable="onBeforeRebindTable" tableType="Table" id="SmartTable">
                 <smartTable:customToolbar>
                     <OverflowToolbar id="_IDGenOverflowToolbar1" design="Transparent">
                     <!-- <u:FileUploader id="_IDGenFileUploader1" name="myFileUpload" change="onChangeArquivo" buttonText="Upload" fileType="csv" buttonOnly="true"/> -->

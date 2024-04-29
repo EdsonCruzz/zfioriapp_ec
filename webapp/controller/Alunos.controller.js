@@ -7,7 +7,7 @@ sap.ui.define([
     'sap/ui/table/Column',
     'sap/ui/model/FilterOperator',
     "sap/ui/model/Filter",
-    "sap/m/MessageItem"   
+    "sap/m/MessageItem"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -87,7 +87,15 @@ sap.ui.define([
                 this._Idcurso = Idcurso;
 
                 let oTable = this.getView().byId("SmartTable");
-                oTable.rebindTable();
+                // oTable.rebindTable();
+
+                if (oTable.isInitialised()) {
+                    oTable.rebindSmartTable();
+                } else {
+                    oTable.attachEventOnce("afterInit", function() {
+                        oTable.rebindSmartTable();
+                    }, this);
+                }
 
             },
 
@@ -111,7 +119,7 @@ sap.ui.define([
                 });
             },
 
-            onBeforeRebindTable: function(oEvent){
+            onBeforeRebindTable: function (oEvent) {
                 var oBinding = oEvent.getParameter("bindingParams");
                 var Idcurso = parseInt(this._Idcurso);
                 var oFilter = new sap.ui.model.Filter("Idcurso", sap.ui.model.FilterOperator.EQ, Idcurso);
@@ -153,10 +161,10 @@ sap.ui.define([
 
                 var oDados = {
                     "Idcurso": this._Idcurso,
-                    "Alunoid": Alunoid                    
+                    "Alunoid": Alunoid
                 }
 
-                this.getView().getModel().callFunction('/GetAlunoExist', {                    
+                this.getView().getModel().callFunction('/GetAlunoExist', {
                     method: "GET",
                     urlParameters: oDados,
                     success: function (oData, oReponse) {
@@ -176,7 +184,7 @@ sap.ui.define([
                                                 if (!oModelAuxiliar.oData.Mensagens) {
                                                     oModelAuxiliar.oData.Mensagens = [];
                                                 }
-                                                
+
                                                 let arrayMsg = {
                                                     type: "Success",
                                                     title: "Aluno incluido com sucesso !!!",
@@ -231,7 +239,7 @@ sap.ui.define([
                 let Table = this.getView().byId("idTable")
                 let selecionados = Table.getSelectedContextPaths()
                 if (selecionados.length > 0) {
-                    sap.m.MessageBox.alert("Confirma a exclusão dos alunos selecionados?"  , {
+                    sap.m.MessageBox.alert("Confirma a exclusão dos alunos selecionados?", {
                         actions: ["Sim", "Não"],
                         onClose: function (sAction) {
                             if (sAction == "Sim") {
@@ -278,5 +286,120 @@ sap.ui.define([
                     sap.m.MessageBox.error("Selecione um aluno para exclusão!!!")
                 }
             },
+
+            onChangeArquivo: function (oEvent) {
+                let file = oEvent.mParameters.files[0];
+                let tipoArquivo = oEvent.mParameters.files[0].type;
+                let oModel = this.getView().getModel()
+                let oModelAuxiliar = this.getView().getModel("AuxiliarAluno")
+                let that = this
+
+                if (tipoArquivo !== "text/csv") {
+                    MessageBox.error("Somente arquivo CSV.");
+                    return;
+                }
+
+                var reader = new FileReader();
+                reader.readAsText(file);
+
+                reader.onload = function () {
+                    let texto = reader.result;
+                    let linhas = texto.split("\r\n");
+                    let lengthLinhas = linhas.length;
+
+                    let Cabecalho = linhas[0].split(";");
+
+                    if (Cabecalho[0] !== "ID do Aluno") {
+                        sap.m.MessageBox.error(
+                            "A primeira coluna do CSV, deverá ser 'ID do Aluno'."
+                        );
+                        return;
+                    }
+
+                    if (Cabecalho[1] !== "Nome do Aluno") {
+                        sap.m.MessageBox.error(
+                            "A segunda coluna do CSV, deverá ser 'Nome do Aluno'."
+                        );
+                        return;
+                    }
+
+                    if (Cabecalho[2] !== "Ativo") {
+                        sap.m.MessageBox.error(
+                            "A terceira coluna do CSV, deverá ser 'Ativo'."
+                        );
+                        return;
+                    }
+
+                    if (lengthLinhas > 0) {
+                        sap.m.MessageBox.alert("Deseja fazer a carga de " + (lengthLinhas - 1) + " alunos?", {
+                            actions: ["Sim", "Não"],
+                            onClose: function (sAction) {
+                                if (sAction == "Sim") {
+
+                                    for (let i = 0; i < lengthLinhas; i++) {
+                                        if (i !== 0) {
+                                            let split = linhas[i].split(";");
+
+                                            let AlunoAtivo = false;
+
+                                            if (split[2] === 'Yes' || split[2] === 'Sim') {
+                                                AlunoAtivo = true;
+                                            } else if (split[2] === 'No' || split[2] === 'Não') {
+                                                AlunoAtivo = false;
+                                            }
+
+                                            let objeto = {
+                                                Idcurso: parseInt(that._Idcurso),
+                                                Alunoid: parseInt(split[0]),
+                                                Nomealuno: split[1],
+                                                Ativo: AlunoAtivo
+                                            };
+                                            if (objeto.Idcurso !== "" && objeto.Alunoid !== "") {
+                                                
+                                                oModel.create('/AlunosSet', objeto, {
+                                                    success: function (oData, oReponse) {
+                                                        let arrayMsg = {
+                                                            type: "Success",
+                                                            title: "Aluno incluido com sucesso !!!",
+                                                            activeTitle: true,
+                                                            description: "O aluno " + objeto.Nomealuno + " foi incluido com sucesso!!!",
+                                                        }
+                                                        oModelAuxiliar.oData.Mensagens.push(arrayMsg);
+                                                        oModelAuxiliar.refresh(true);
+                                                        oModel.refresh(true);
+
+                                                        that.byId("messagePopoverBtn").setType("Accept");
+                                                        oMessagePopover.openBy(that.getView().byId("messagePopoverBtn"));
+
+                                                        that.CancelarAdicionar()
+                                                    },
+                                                    error: function (oError) {
+                                                        let arrayMsg = {
+                                                            type: "Error",
+                                                            title: "Erro ao incluir aluno !!!",
+                                                            activeTitle: true,
+                                                            description: "Erro ao incluir aluno " + objeto.Nomealuno + " !!!",
+                                                        }
+                                                        oModelAuxiliar.oData.Mensagens.push(arrayMsg);
+                                                        oModelAuxiliar.refresh(true);
+                                                        oModel.refresh(true);
+
+                                                        that.byId("messagePopoverBtn").setType("Accept");
+                                                        oMessagePopover.openBy(that.getView().byId("messagePopoverBtn"));
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    }
+
+                                }
+                            }
+                        })
+
+                    }
+                    oModelAuxiliar.refresh()
+                    oModel.refresh()
+                };
+            }
         });
     });
