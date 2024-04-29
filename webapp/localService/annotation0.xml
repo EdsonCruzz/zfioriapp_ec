@@ -15,6 +15,9 @@
                         <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
                             <PropertyValue Property="ValueListProperty" String="Nomecurso"/>
                         </Record>
+                        <Record Type="com.sap.vocabularies.Common.v1.ValueListParameterDisplayOnly">
+                            <PropertyValue Property="ValueListProperty" String="Duracao"/>
+                        </Record>
                     </Collection>
                 </PropertyValue>
 

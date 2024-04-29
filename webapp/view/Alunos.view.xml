@@ -10,19 +10,20 @@
     xmlns:u="sap.ui.unified">
     <Page id="page" title="{i18n>title}">
         <customHeader>
-            <shelbar:ShellBar id="_IDGenShellBar1" title="Exed Consulting" showCopilot="false" showSearch="false" showMenuButton="false" showNotifications="false" homeIcon="../Imagens/logo.jpeg" showProductSwitcher="false" showNavButton="true" navButtonPressed="navButtonPressed" />
+            <shelbar:ShellBar id="_IDGenShellBar1" title="Exed Consulting" showCopilot="false" showSearch="false" showMenuButton="false" showNotifications="false" showProductSwitcher="false" showNavButton="true" navButtonPressed="navButtonPressed" />
         </customHeader>
         <content>
-            <ObjectHeader id="_IDGenObjectHeader1" title="{Nomecurso}" class="sapUiResponsivePadding--header">
+            <ObjectHeader id="_IDGenObjectHeader1" title="ID do curso: {Idcurso}" class="sapUiResponsivePadding--header">            
+                <ObjectAttribute id="_IDGenObjectAttribute2" text="Nome do curso: {Nomecurso}" active="false" />
                 <ObjectAttribute id="_IDGenObjectAttribute1" text="Duração: {Duracao} horas" active="false" />
-                <!-- <ObjectAttribute id="_IDGenObjectAttribute2" text="{Duracao} Horas" active="false" /> -->
+                
             </ObjectHeader>
 
             <smartTable:SmartTable entitySet="AlunosSet" smartFilterId="SF_CURSO" useExportToExcel="true" useVariantManagement="true" useTablePersonalisation="true" header="Lista de alunos" showRowCount="true" showFullScreenButton="true" enableAutoBinding="true" requestAtLeastFields="Alunoid,Nomealuno,Ativo" initiallyVisibleFields="Alunoid,Nomealuno,Ativo" beforeRebindTable="onBeforeRebindTable" tableType="Table" id="SmartTable">
                 <smartTable:customToolbar>
                     <OverflowToolbar id="_IDGenOverflowToolbar1" design="Transparent">
                         <ToolbarSpacer id="_IDGenToolbarSpacer1" />
-                        <OverflowToolbarButton id="btEdit" icon="sap-icon://edit" press="onEdit" />
+                        <!-- <OverflowToolbarButton id="btEdit" icon="sap-icon://edit" press="onEdit" /> -->
                         <OverflowToolbarButton id="btAdd" icon="sap-icon://add" press="onAdiciona" />
                         <OverflowToolbarButton id="btDelete" icon="sap-icon://delete" press="onDeleta" />
                     </OverflowToolbar>

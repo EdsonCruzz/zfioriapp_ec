@@ -20,7 +20,9 @@
         "uri": "/sap/opu/odata/sap/ZG_CURSOFIORI_EC_SRV/",
         "type": "OData",
         "settings": {
-          "annotations": [],
+          "annotations": [
+            "annotation0"
+          ],
           "localUri": "localService/metadata.xml",
           "odataVersion": "2.0"
         }

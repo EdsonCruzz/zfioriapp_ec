@@ -1,0 +1,21 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form">
+    <Dialog id="_IDGenDialog1" class="sapUiContentPadding" title="Adicionar aluno">
+        <content>
+            <Input id="_IDGenInput1" placeholder="Informe o ID do Aluno" />
+            <Input id="_IDGenInput2" placeholder="Informe o Nome do Aluno" />
+            <Label id="_IDGenLabel1" text="Aluno Ativo?" />
+            <CheckBox id="_IDGenInput3" selected="true" />
+        </content>
+            <Toolbar id="_IDGenToolbar1">
+                <content>
+                    <ToolbarSpacer id="_IDGenToolbarSpacer1" />
+                    <Button id="_IDGenButton1" type="Accept" text="Gravar" press="GravaAdicionar" />
+                    <Button id="_IDGenButton2" text="Cancelar" press="CancelarAdicionar" />
+                </content>
+            </Toolbar>
+    </Dialog>
+</core:FragmentDefinition>
