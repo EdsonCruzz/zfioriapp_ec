@@ -121,7 +121,10 @@ sap.ui.define([
                 this.adicionar.open();
             },
 
-            CancelarAdicionar: function () {
+            CancelarAdicionar: function () {   
+                this.adicionar.mAggregations.content[0].setValue("");
+                this.adicionar.mAggregations.content[1].setValue("");
+                this.adicionar.mAggregations.content[2].setValue("");             
                 this.adicionar.close();
             },
 
